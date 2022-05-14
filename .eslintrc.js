@@ -6,6 +6,7 @@ module.exports = {
   extends: [
     "eslint:recommended",
     "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
     "plugin:@typescript-eslint/recommended",
     "prettier",
   ],
@@ -17,9 +18,10 @@ module.exports = {
     ecmaVersion: "latest",
     sourceType: "module",
   },
-  plugins: ["react", "@typescript-eslint"],
+  plugins: ["react", "@typescript-eslint", "css-reorder"],
   rules: {
     "react/self-closing-comp": "error",
+    "css-reorder/property-reorder": "error",
   },
   ignorePatterns: [".eslintrc.js"],
 };
