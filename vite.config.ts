@@ -9,4 +9,10 @@ export default defineConfig({
     }),
   ],
   esbuild: {},
+  build: {
+    lib: {
+      entry: "./src/index.ts",
+      name: "MuUi",
+    },
+  },
 });
