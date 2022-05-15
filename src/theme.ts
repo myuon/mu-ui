@@ -85,7 +85,7 @@ export const theme = {
     body: {
       fontSize: 16,
       fontWeight: 400,
-      letterSpacing: 0.5,
+      letterSpacing: 0.1,
       lineHeight: 1.65,
     },
     button: {
