@@ -81,8 +81,9 @@ export const ComponentPage = () => {
                   <div
                     css={css`
                       width: 100%;
-                      padding: 16px;
+                      padding: 24px;
                       margin: auto;
+                      overflow: hidden;
                       border: 1px solid ${theme.palette.gray[300]};
                       border-radius: 4px;
                     `}
