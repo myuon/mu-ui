@@ -19,7 +19,10 @@ const uiBook = (): Plugin => {
       };
     },
     handleHotUpdate: (ctx) => {
-      return ctx.file.endsWith(".tsx") ? [require("./uibook/App")] : [];
+      ctx.server.ws.send({
+        type: "full-reload",
+      });
+      return [];
     },
   };
 };
