@@ -22,6 +22,8 @@ module.exports = {
   rules: {
     "react/self-closing-comp": "error",
     "css-reorder/property-reorder": "error",
+    "react/display-name": "off",
+    "react/prop-types": "off",
   },
   ignorePatterns: [".eslintrc.js"],
 };

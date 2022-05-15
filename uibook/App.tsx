@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { usePromise } from "../src/usePromise";
 
 function App() {
-  const { data } = usePromise<Record<string, () => JSX.Element>>(
-    import("../src/Button.story")
+  const { data } = usePromise<Record<string, () => JSX.Element>[]>(
+    useMemo(
+      () =>
+        Promise.all([
+          import("../src/Button.story"),
+          import("../src/TextField.story"),
+        ]),
+      []
+    )
   );
 
   return (
@@ -11,12 +18,14 @@ function App() {
       <div className="App">UIBook</div>
 
       {data &&
-        Object.keys(data).map((key) => (
-          <div key={key}>
-            <h2>{key}</h2>
-            {data[key]()}
-          </div>
-        ))}
+        data.map((mod) =>
+          Object.keys(mod).map((key) => (
+            <div key={key}>
+              <h2>{key}</h2>
+              {mod[key]()}
+            </div>
+          ))
+        )}
     </>
   );
 }
