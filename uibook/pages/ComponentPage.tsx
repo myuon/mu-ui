@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 import React from "react";
-import { Typography, usePromise } from "../src";
+import { Typography, usePromise } from "../../src";
 import { css } from "@emotion/react";
 
 export const ComponentPage = () => {

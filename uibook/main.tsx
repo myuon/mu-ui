@@ -12,6 +12,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         styles={css`
           body {
             margin: 0;
+            color: #222;
           }
         `}
       />

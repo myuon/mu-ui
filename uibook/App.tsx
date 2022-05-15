@@ -1,10 +1,19 @@
 import { css } from "@emotion/react";
 import React, { useMemo } from "react";
 import { usePromise } from "../src/usePromise";
-import { Route, Routes, Link, Outlet, useLocation } from "react-router-dom";
-import { ComponentPage } from "./ComponentPage";
+import {
+  Route,
+  Routes,
+  Link,
+  Outlet,
+  useLocation,
+  Navigate,
+} from "react-router-dom";
+import { ComponentPage } from "./pages/ComponentPage";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
-import { theme } from "../src";
+import { AnchorButton, theme } from "../src";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import { WelcomePage } from "./pages/WelcomePage";
 
 function App() {
   const modules = useMemo(
@@ -23,7 +32,11 @@ function App() {
   const { data } = usePromise(modules);
 
   const location = useLocation();
-  const currentName = (location.state as { name: string }).name;
+  const currentName = (location.state as { name: string } | undefined)?.name;
+
+  if (location.pathname === "/") {
+    return <Navigate to="/welcome" />;
+  }
 
   return (
     <Routes>
@@ -52,17 +65,35 @@ function App() {
                   margin: 0 auto;
                 `}
               >
-                <h1
+                <Link
+                  to="/"
                   css={css`
-                    display: flex;
-                    gap: 8px;
-                    font-size: 20px;
-                    color: ${theme.palette.primary.main};
+                    text-decoration: none;
                   `}
                 >
-                  <MenuBookIcon />
-                  UIBook
-                </h1>
+                  <h1
+                    css={css`
+                      display: flex;
+                      gap: 8px;
+                      font-size: 20px;
+                      color: ${theme.palette.primary.main};
+                    `}
+                  >
+                    <MenuBookIcon />
+                    UIBook
+                  </h1>
+                </Link>
+
+                <div
+                  css={css`
+                    display: flex;
+                    align-items: center;
+                  `}
+                >
+                  <AnchorButton href="https://github.com/myuon/mu-ui" blank>
+                    <GitHubIcon />
+                  </AnchorButton>
+                </div>
               </div>
             </header>
             <div
@@ -124,7 +155,8 @@ function App() {
           </>
         }
       >
-        <Route path="component/:name" element={<ComponentPage />} />
+        <Route path="/component/:name" element={<ComponentPage />} />
+        <Route path="/welcome" element={<WelcomePage />} />
       </Route>
     </Routes>
   );

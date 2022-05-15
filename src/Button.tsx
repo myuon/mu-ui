@@ -5,6 +5,7 @@ import { theme } from "./theme";
 const styles = {
   reset: css`
     padding: 0;
+    color: inherit;
     cursor: pointer;
     background-color: transparent;
     border: none;
@@ -52,7 +53,8 @@ const styles = {
     `,
   },
   linkLike: css`
-    display: inline-block;
+    display: flex;
+    align-items: center;
     text-decoration: underline;
     &:hover {
       text-decoration: none;
