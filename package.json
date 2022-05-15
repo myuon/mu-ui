@@ -2,7 +2,7 @@
   "name": "@myuon/mu-ui",
   "version": "0.1.0",
   "files": [
-    "./dist"
+    "dist"
   ],
   "main": "./dist/mu-ui.umd.js",
   "module": "./dist/mu-ui.es.js",
