@@ -90,7 +90,7 @@ export const ComponentPage = () => {
                   >
                     <Component />
                   </div>
-                  <CodePanel>
+                  <CodePanel key={`${name}-${key}`}>
                     <SyntaxHighlighter
                       language="typescript"
                       style={atomOneDark}
