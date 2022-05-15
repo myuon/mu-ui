@@ -1,19 +1,25 @@
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import React from "react";
 import { Typography, usePromise } from "../../src";
 import { css } from "@emotion/react";
 
-export const ComponentPage = () => {
-  const location = useLocation();
+function assertIsDefined<T>(val: T): asserts val is NonNullable<T> {
+  if (val === undefined || val === null) {
+    throw new Error(`Expected 'val' to be defined, but received ${val}`);
+  }
+}
 
-  const state = location.state as { file: string; name: string };
+export const ComponentPage = () => {
+  const { name } = useParams<{ name: string }>();
+  assertIsDefined(name);
+
   const { data } = usePromise<Record<string, () => JSX.Element>>(
-    import(/* @vite-ignore */ state.file)
+    import(`../../src/${name}.story.tsx`)
   );
 
   return (
     <>
-      <Typography variant="h2">{state.name}</Typography>
+      <Typography variant="h2">{name}</Typography>
 
       <div
         css={css`

@@ -16,19 +16,16 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import { WelcomePage } from "./pages/WelcomePage";
 
 function App() {
-  const modules = useMemo(
-    () =>
-      Promise.all(
-        STORY_FILES.map((file) => ({
-          file,
-          name: file.split("/").pop()?.replace(".story.tsx", ""),
-          module: import(/* @vite-ignore */ file) as Promise<
-            Record<string, () => JSX.Element>
-          >,
-        }))
-      ),
-    []
-  );
+  const modules = useMemo(() => {
+    const modules = import.meta.glob("../src/*.story.tsx");
+    return Promise.all(
+      Object.keys(modules).map((key) => ({
+        file: key,
+        name: key.split("/").pop()?.replace(".story.tsx", ""),
+        module: modules[key](),
+      }))
+    );
+  }, []);
   const { data } = usePromise(modules);
 
   const location = useLocation();
