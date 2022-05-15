@@ -14,6 +14,10 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             margin: 0;
             color: #222;
           }
+
+          * {
+            box-sizing: border-box;
+          }
         `}
       />
       <App />

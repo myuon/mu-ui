@@ -52,6 +52,11 @@ const styles = {
       color: ${theme.palette.text.light};
     `,
   },
+  hasIcon: css`
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  `,
   linkLike: css`
     display: flex;
     align-items: center;
@@ -65,11 +70,14 @@ const styles = {
 export interface ButtonProps extends React.ComponentPropsWithoutRef<"button"> {
   rounded?: boolean;
   color?: "primary" | "default";
+  icon?: React.ReactNode;
 }
 
 export const Button = ({
   rounded,
   color = "default",
+  icon,
+  children,
   ...props
 }: ButtonProps) => {
   return (
@@ -81,8 +89,12 @@ export const Button = ({
         styles.base,
         styles.colors[color],
         rounded && styles.rounded,
+        icon && styles.hasIcon,
       ]}
-    />
+    >
+      {icon}
+      {children}
+    </button>
   );
 };
 
@@ -109,8 +121,10 @@ export const IconButton = ({
 export const LinkButton = ({
   children,
   color,
+  icon,
+  disableUnderline,
   ...props
-}: Omit<ButtonProps, "rounded">) => {
+}: Omit<ButtonProps, "rounded"> & { disableUnderline?: boolean }) => {
   return (
     <button
       {...props}
@@ -121,8 +135,14 @@ export const LinkButton = ({
         color === "primary"
           ? styles.colors.textPrimary
           : styles.colors.textDefault,
+        icon && styles.hasIcon,
+        disableUnderline &&
+          css`
+            text-decoration: none;
+          `,
       ]}
     >
+      {icon}
       {children}
     </button>
   );

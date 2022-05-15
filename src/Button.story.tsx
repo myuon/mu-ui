@@ -4,11 +4,7 @@ import { css } from "@emotion/react";
 import RefreshIcon from "@mui/icons-material/Refresh";
 
 export const Basic = () => {
-  return (
-    <>
-      <Button>This is a button</Button>
-    </>
-  );
+  return <Button>This is a button</Button>;
 };
 
 export const Icon = () => {
