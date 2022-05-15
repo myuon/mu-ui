@@ -135,14 +135,21 @@ export const LinkButton = ({
         color === "primary"
           ? styles.colors.textPrimary
           : styles.colors.textDefault,
-        icon && styles.hasIcon,
         disableUnderline &&
           css`
             text-decoration: none;
           `,
       ]}
     >
-      {icon}
+      {icon && (
+        <span
+          css={css`
+            margin-right: 4px;
+          `}
+        >
+          {icon}
+        </span>
+      )}
       {children}
     </button>
   );

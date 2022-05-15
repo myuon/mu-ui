@@ -1,10 +1,22 @@
 import { useParams } from "react-router-dom";
-import React, { useState } from "react";
-import { Button, theme, Typography, usePromise } from "../../src";
+import React, { useMemo, useState } from "react";
+import {
+  Button,
+  IconButton,
+  theme,
+  Typography,
+  usePromise,
+  useToasts,
+} from "../../src";
 import { css } from "@emotion/react";
-import SyntaxHighlighter from "react-syntax-highlighter";
-import { atomOneDark } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import CodeIcon from "@mui/icons-material/Code";
+import { refractor } from "refractor";
+import tsx from "refractor/lang/tsx";
+import { toH } from "hast-to-hyperscript";
+import "prism-themes/themes/prism-one-dark.css";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+
+refractor.register(tsx);
 
 function assertIsDefined<T>(val: T): asserts val is NonNullable<T> {
   if (val === undefined || val === null) {
@@ -12,8 +24,18 @@ function assertIsDefined<T>(val: T): asserts val is NonNullable<T> {
   }
 }
 
-const CodePanel = ({ children }: { children: React.ReactNode }) => {
+const CodePanel = ({ children }: { children?: string }) => {
   const [open, setOpen] = useState(false);
+  const { addToast } = useToasts();
+
+  const highlighted = useMemo(
+    () =>
+      children
+        ? toH(React.createElement, refractor.highlight(children, "tsx"))
+        : undefined,
+    [children]
+  );
+
   return (
     <div
       css={css`
@@ -31,7 +53,47 @@ const CodePanel = ({ children }: { children: React.ReactNode }) => {
           CODE
         </Button>
       </div>
-      {open ? children : null}
+      {open && (
+        <div
+          css={css`
+            position: relative;
+          `}
+        >
+          <pre
+            className="language-javascript"
+            css={css`
+              font-size: 14px;
+            `}
+          >
+            <code>{highlighted}</code>
+          </pre>
+          <div
+            css={css`
+              position: absolute;
+              top: 8px;
+              right: 4px;
+            `}
+          >
+            <IconButton
+              onClick={() => {
+                if (!children) {
+                  return;
+                }
+
+                navigator.clipboard.writeText(children);
+                addToast("Copied to clipboard!", {
+                  timeout: 2500,
+                });
+              }}
+              css={css`
+                color: white;
+              `}
+            >
+              <ContentCopyIcon />
+            </IconButton>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
@@ -91,18 +153,7 @@ export const ComponentPage = () => {
                     <Component />
                   </div>
                   <CodePanel key={`${name}-${key}`}>
-                    <SyntaxHighlighter
-                      language="typescript"
-                      style={atomOneDark}
-                      css={css`
-                        width: 100%;
-                        margin: 0;
-                        font-size: 16px;
-                        border-radius: 4px;
-                      `}
-                    >
-                      {STORY_CODE[name][key]}
-                    </SyntaxHighlighter>
+                    {STORY_CODE[name][key]}
                   </CodePanel>
                 </section>
               );
