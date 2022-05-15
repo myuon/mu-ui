@@ -23,23 +23,32 @@ export const ComponentPage = () => {
         `}
       >
         {data &&
-          Object.keys(data).map((key) => {
-            const Component = data[key];
+          Object.keys(data)
+            .filter((key) => {
+              const Component = data[key];
+              if (typeof Component !== "function") {
+                return false;
+              }
 
-            return (
-              <section key={key}>
-                <Typography
-                  variant="h4"
-                  css={css`
-                    margin: 8px 0;
-                  `}
-                >
-                  {key}
-                </Typography>
-                <Component />
-              </section>
-            );
-          })}
+              return true;
+            })
+            .map((key) => {
+              const Component = data[key];
+
+              return (
+                <section key={key}>
+                  <Typography
+                    variant="h4"
+                    css={css`
+                      margin: 8px 0;
+                    `}
+                  >
+                    {key}
+                  </Typography>
+                  <Component />
+                </section>
+              );
+            })}
       </div>
     </>
   );
