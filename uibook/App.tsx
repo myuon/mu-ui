@@ -19,7 +19,7 @@ function App() {
   const modules = useMemo(
     () =>
       Promise.all(
-        window.modules.map((file) => ({
+        STORY_FILES.map((file) => ({
           file,
           name: file.split("/").pop()?.replace(".story.tsx", ""),
           module: import(/* @vite-ignore */ file) as Promise<

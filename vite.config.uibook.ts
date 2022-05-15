@@ -11,7 +11,7 @@ const uiBook = (): Plugin => {
 
       return {
         define: {
-          modules: fs
+          STORY_FILES: fs
             .readdirSync(dir)
             .filter((f) => f.match(/(.*)\.story\.tsx$/))
             .map((f) => path.join(dir, f)),

@@ -1,7 +1,1 @@
-export {};
-
-declare global {
-  interface Window {
-    modules: string[];
-  }
-}
+declare const STORY_FILES: string[];
