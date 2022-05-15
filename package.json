@@ -1,6 +1,12 @@
 {
   "name": "@myuon/mu-ui",
   "version": "0.2.0",
+  "license": "MIT",
+  "homepage": "https://mu-ui.vercel.app/welcome",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/myuon/mu-ui.git"
+  },
   "files": [
     "dist"
   ],
