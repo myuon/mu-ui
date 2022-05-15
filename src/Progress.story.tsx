@@ -7,7 +7,7 @@ export const Basic = () => {
   return <Progress progress={0.4} />;
 };
 
-export const ProgressWithAnimation = () => {
+export const WithAnimation = () => {
   const [value, setValue] = useState(0.4);
 
   useEffect(() => {

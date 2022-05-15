@@ -157,14 +157,11 @@ export const useToasts = () => {
     throw new Error("useToasts must be used within a ToastProvider");
   }
 
-  return useMemo(
-    () => ({
-      addToast: ctx.addToast,
-      removeToast: ctx.removeToast,
-      updateToast: ctx.updateToast,
-    }),
-    [ctx.addToast, ctx.removeToast, ctx.updateToast]
-  );
+  return {
+    addToast: ctx.addToast,
+    removeToast: ctx.removeToast,
+    updateToast: ctx.updateToast,
+  };
 };
 
 export const Toast = ({
