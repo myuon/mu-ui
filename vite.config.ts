@@ -14,5 +14,14 @@ export default defineConfig({
       entry: "./src/index.ts",
       name: "MuUi",
     },
+    rollupOptions: {
+      external: ["react", "react-dom"],
+      output: {
+        globals: {
+          react: "React",
+          "react-dom": "ReactDOM",
+        },
+      },
+    },
   },
 });
