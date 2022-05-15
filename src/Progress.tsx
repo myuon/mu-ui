@@ -7,13 +7,14 @@ export const Progress = ({ progress }: { progress: number }) => {
     <div
       css={css`
         position: relative;
+        box-sizing: border-box;
       `}
     >
       <div
         css={[
           css`
             position: absolute;
-            width: ${progress * 100}%;
+            width: ${Math.min(progress * 100, 100)}%;
             height: 4px;
             background-color: ${theme.palette.primary.dark};
           `,

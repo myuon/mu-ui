@@ -4,7 +4,11 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 export const Basic = () => {
-  const [value, setValue] = useState(0.5);
+  return <Progress progress={0.4} />;
+};
+
+export const ProgressWithAnimation = () => {
+  const [value, setValue] = useState(0.4);
 
   useEffect(() => {
     const timer = setInterval(() => {

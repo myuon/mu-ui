@@ -4,6 +4,7 @@ import { theme } from "./theme";
 
 const styles = {
   base: css`
+    box-sizing: border-box;
     display: grid;
     align-items: center;
     width: 100%;

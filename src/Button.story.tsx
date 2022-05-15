@@ -7,10 +7,15 @@ export const Basic = () => {
   return (
     <>
       <Button>This is a button</Button>
-      <IconButton>
-        <RefreshIcon />
-      </IconButton>
     </>
+  );
+};
+
+export const Icon = () => {
+  return (
+    <IconButton>
+      <RefreshIcon />
+    </IconButton>
   );
 };
 
