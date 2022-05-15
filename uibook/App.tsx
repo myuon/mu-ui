@@ -109,7 +109,7 @@ function App() {
                     position: fixed;
                     display: grid;
                     gap: 4px;
-                    width: 200px;
+                    width: calc(200px - 8px);
                     margin-top: 16px;
                   `}
                 >
@@ -122,7 +122,7 @@ function App() {
                         state={{ name: mod.name, file: mod.file }}
                         css={css`
                           display: block;
-                          padding: 4px 8px;
+                          padding: 8px 8px;
                           color: ${theme.palette.gray[700]};
                           text-decoration: none;
                           border-radius: 4px;
@@ -146,7 +146,7 @@ function App() {
               <main
                 css={css`
                   max-width: 1280px;
-                  margin: 16px;
+                  margin: 16px 0;
                   overflow-y: auto;
                 `}
               >

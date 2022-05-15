@@ -12,7 +12,11 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         styles={css`
           body {
             margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+              Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+              sans-serif;
             color: #222;
+            -webkit-font-smoothing: antialiased;
           }
 
           * {
