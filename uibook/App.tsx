@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 import React, { useMemo } from "react";
 import { usePromise } from "../src/usePromise";
-import { Route, Routes, Link, Outlet } from "react-router-dom";
+import { Route, Routes, Link, Outlet, useLocation } from "react-router-dom";
 import { ComponentPage } from "./ComponentPage";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import { theme } from "../src";
@@ -21,6 +21,9 @@ function App() {
     []
   );
   const { data } = usePromise(modules);
+
+  const location = useLocation();
+  const currentName = (location.state as { name: string }).name;
 
   return (
     <Routes>
@@ -82,14 +85,25 @@ function App() {
                   {data?.map((mod) => {
                     return (
                       <Link
+                        aria-selected={currentName === mod.name}
                         key={mod.name}
                         to={`/component/${mod.name}`}
                         state={{ name: mod.name, file: mod.file }}
                         css={css`
                           display: block;
-                          padding: 4px 0;
+                          padding: 4px 8px;
                           color: ${theme.palette.gray[700]};
                           text-decoration: none;
+                          border-radius: 4px;
+
+                          &[aria-selected="true"] {
+                            font-weight: 600;
+                            color: ${theme.palette.primary.main};
+                          }
+
+                          &:hover {
+                            background-color: ${theme.palette.gray[100]};
+                          }
                         `}
                       >
                         {mod.name}
