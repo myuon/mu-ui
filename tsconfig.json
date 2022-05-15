@@ -15,8 +15,9 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "jsxImportSource": "@emotion/react"
+    "jsxImportSource": "@emotion/react",
+    "typeRoots": ["./types"]
   },
-  "include": ["src", "uibook"],
+  "include": ["src", "uibook", "types"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
