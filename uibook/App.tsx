@@ -45,6 +45,7 @@ function App() {
               css={[
                 css`
                   position: sticky;
+                  top: 0;
                   padding: 0 16px;
                 `,
                 css`
@@ -96,7 +97,7 @@ function App() {
             <div
               css={css`
                 display: grid;
-                grid-template-columns: minmax(200px, auto) 1fr;
+                grid-template-columns: 200px 1fr;
                 gap: 16px;
                 max-width: 1080px;
                 margin: 0 auto;
@@ -105,8 +106,10 @@ function App() {
               <aside>
                 <div
                   css={css`
+                    position: fixed;
                     display: grid;
                     gap: 4px;
+                    width: 200px;
                     margin-top: 16px;
                   `}
                 >
@@ -144,6 +147,7 @@ function App() {
                 css={css`
                   max-width: 1280px;
                   margin: 16px;
+                  overflow-y: auto;
                 `}
               >
                 <Outlet />
