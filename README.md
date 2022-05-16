@@ -8,5 +8,5 @@
 yarn add @myuon/mu-ui
 ```
 
-- [UIBook](https://github.com/myuon/mu-ui)
+- [UIBook](https://mu-ui.vercel.app)
 - [codesandbox](https://codesandbox.io/s/mu-ui-pg61sj)
