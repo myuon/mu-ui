@@ -234,11 +234,7 @@ export const Toast = ({
           </Typography>
         </div>
         {loading ? (
-          <DotSpinner
-            size={theme.typography.body.fontSize * 1.3}
-            speed={0.9}
-            color="white"
-          />
+          <DotSpinner size={20} speed={0.9} color="white" />
         ) : (
           <IconButton
             onClick={() => {
