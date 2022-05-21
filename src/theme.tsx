@@ -141,17 +141,14 @@ const createThemeStyle = (theme: Theme) => {
 
 export const [themeStyle, theme] = createThemeStyle(defaultTheme);
 
-export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
+export const MuUiStyles = () => {
   return (
-    <>
-      <Global
-        styles={{
-          ":root": Object.fromEntries(
-            themeStyle.map((item) => [`--${item.name}`, `${item.value}`])
-          ),
-        }}
-      />
-      {children}
-    </>
+    <Global
+      styles={{
+        ":root": Object.fromEntries(
+          themeStyle.map((item) => [`--${item.name}`, `${item.value}`])
+        ),
+      }}
+    />
   );
 };
