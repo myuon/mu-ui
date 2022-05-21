@@ -153,7 +153,7 @@ export const ComponentPage = () => {
                     <Component />
                   </div>
                   <CodePanel key={`${name}-${key}`}>
-                    {STORY_CODE[name][key]}
+                    {STORY_CODE?.[name]?.[key]}
                   </CodePanel>
                 </section>
               );
