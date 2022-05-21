@@ -25,6 +25,15 @@ export const useModal = (options?: {
   );
 };
 
+const styles = {
+  glass: css`
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8px);
+  `,
+};
+
 export interface ModalProps {
   open?: boolean;
   onClose?: () => void;
@@ -52,7 +61,7 @@ export const Modal = ({
   return ReactDOM.createPortal(
     <div
       css={[
-        theme.glass,
+        styles.glass,
         css`
           position: fixed;
           top: 0;

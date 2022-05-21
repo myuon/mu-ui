@@ -1,5 +1,6 @@
-import { css } from "@emotion/react";
+import { Global } from "@emotion/react";
 import Color from "color";
+import React from "react";
 
 const palette = {
   primary: {
@@ -70,7 +71,7 @@ const coloredShadow = (code: string) => {
   };
 };
 
-export const theme = {
+export const defaultTheme = {
   typography: {
     h1: {
       fontSize: 36,
@@ -85,28 +86,72 @@ export const theme = {
     body: {
       fontSize: 16,
       fontWeight: 400,
-      letterSpacing: 0.1,
+      letterSpacing: "0.1px",
       lineHeight: 1.65,
     },
     button: {
       fontSize: 16,
       fontWeight: 500,
-      letterSpacing: 1.1,
+      letterSpacing: "1.1px",
       lineHeight: 1.15,
     },
-    caption: css`
-      font-size: 14px;
-      line-height: 1.35;
-      letter-spacing: 0.5px;
-    `,
+    caption: {
+      fontSize: 14,
+      lineHeight: 1.35,
+      letterSpacing: "0.5px",
+    },
   },
   palette,
   shadow,
   primaryShadow: coloredShadow(palette.primary.main),
-  glass: css`
-    background: rgba(255, 255, 255, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(8px);
-  `,
+};
+type Theme = typeof defaultTheme;
+
+const createThemeStyle = (theme: Theme) => {
+  const result = [] as { name: string; value: unknown; var: string }[];
+
+  const run = (object: unknown, prefix: string) => {
+    if (typeof object === "function") {
+      return undefined;
+    }
+
+    if (typeof object !== "object") {
+      result.push({ name: prefix, value: object, var: `var(--${prefix})` });
+      return `var(--${prefix})`;
+    } else {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const style = {} as any;
+      for (const key in object) {
+        const value = run(
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (object as any)[key],
+          prefix === "" ? key : `${prefix}-${key}`
+        );
+        style[key] = value;
+      }
+
+      return style;
+    }
+  };
+
+  const varStyle = run(theme, "");
+
+  return [result, varStyle as Theme] as const;
+};
+
+export const [themeStyle, theme] = createThemeStyle(defaultTheme);
+
+export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <>
+      <Global
+        styles={{
+          ":root": Object.fromEntries(
+            themeStyle.map((item) => [`--${item.name}`, `${item.value}`])
+          ),
+        }}
+      />
+      {children}
+    </>
+  );
 };
