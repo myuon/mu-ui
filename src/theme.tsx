@@ -107,7 +107,7 @@ export const defaultTheme = {
 };
 export type Theme = typeof defaultTheme;
 
-const createThemeStyle = (theme: Theme) => {
+const createThemeStyle = (theme: DeepPartial<Theme>) => {
   const result = [] as { name: string; value: unknown; var: string }[];
 
   const run = (object: unknown, prefix: string) => {
@@ -139,7 +139,21 @@ const createThemeStyle = (theme: Theme) => {
   return [result, varStyle as Theme] as const;
 };
 
-export const [themeStyle, theme] = createThemeStyle(defaultTheme);
+const cts = createThemeStyle(defaultTheme);
+const themeStyle = cts[0];
+export const theme = cts[1];
+
+export type DeepPartial<T> = {
+  [K in keyof T]?: T[K] extends object ? DeepPartial<T[K]> : T[K];
+};
+
+export const createMuUiStyles = (theme: DeepPartial<Theme>) => {
+  const [style] = createThemeStyle(theme);
+
+  return Object.fromEntries(
+    style.map((item) => [`--${item.name}`, `${item.value}`])
+  );
+};
 
 export const MuUiStyles = () => {
   return (

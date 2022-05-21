@@ -3,7 +3,7 @@ import React, { useMemo, useState } from "react";
 import {
   Button,
   IconButton,
-  defaultTheme as theme,
+  theme,
   Typography,
   usePromise,
   useToasts,
