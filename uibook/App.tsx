@@ -11,7 +11,7 @@ import {
 } from "react-router-dom";
 import { ComponentPage } from "./pages/ComponentPage";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
-import { AnchorButton, theme } from "../src";
+import { AnchorButton, defaultTheme as theme } from "../src";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import { WelcomePage } from "./pages/WelcomePage";
 

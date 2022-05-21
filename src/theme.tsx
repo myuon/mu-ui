@@ -105,7 +105,7 @@ export const defaultTheme = {
   shadow,
   primaryShadow: coloredShadow(palette.primary.main),
 };
-type Theme = typeof defaultTheme;
+export type Theme = typeof defaultTheme;
 
 const createThemeStyle = (theme: Theme) => {
   const result = [] as { name: string; value: unknown; var: string }[];
