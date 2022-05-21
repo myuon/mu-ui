@@ -8,15 +8,6 @@ const palette = {
     dark: "#5b21b6",
   },
   semantical: {
-    open: {
-      main: "#059669",
-    },
-    closed: {
-      main: "#4f46e5",
-    },
-    draft: {
-      main: "#9aa1ad",
-    },
     success: {
       main: "#16a34a",
     },
