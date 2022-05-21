@@ -74,29 +74,29 @@ const coloredShadow = (code: string) => {
 export const defaultTheme = {
   typography: {
     h1: {
-      fontSize: 36,
+      fontSize: "36px",
       fontWeight: 700,
     },
     h2: {
-      fontSize: 28,
+      fontSize: "28px",
       fontWeight: 700,
     },
-    h3: { fontSize: 24, fontWeight: 600 },
-    h4: { fontSize: 20, fontWeight: 600 },
+    h3: { fontSize: "24px", fontWeight: 600 },
+    h4: { fontSize: "20px", fontWeight: 600 },
     body: {
-      fontSize: 16,
+      fontSize: "16px",
       fontWeight: 400,
       letterSpacing: "0.1px",
       lineHeight: 1.65,
     },
     button: {
-      fontSize: 16,
+      fontSize: "16px",
       fontWeight: 500,
       letterSpacing: "1.1px",
       lineHeight: 1.15,
     },
     caption: {
-      fontSize: 14,
+      fontSize: "13px",
       lineHeight: 1.35,
       letterSpacing: "0.5px",
     },
