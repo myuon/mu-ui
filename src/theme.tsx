@@ -148,6 +148,9 @@ export type DeepPartial<T> = {
 };
 
 export const createMuUiStyles = (theme: DeepPartial<Theme>) => {
+  if (theme.palette?.primary?.main) {
+    theme.primaryShadow = coloredShadow(theme.palette.primary.main);
+  }
   const [style] = createThemeStyle(theme);
 
   return Object.fromEntries(
