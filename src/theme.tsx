@@ -72,8 +72,8 @@ export const defaultTheme = {
       fontSize: "28px",
       fontWeight: 700,
     },
-    h3: { fontSize: "24px", fontWeight: 600 },
-    h4: { fontSize: "20px", fontWeight: 600 },
+    h3: { fontSize: "24px", fontWeight: 600, letterSpacing: "-0.1px" },
+    h4: { fontSize: "20px", fontWeight: 600, letterSpacing: "0.1px" },
     body: {
       fontSize: "16px",
       fontWeight: 400,
