@@ -1,5 +1,5 @@
 import { css, Global } from "@emotion/react";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { usePromise } from "../src/usePromise";
 import {
   Route,
@@ -7,7 +7,7 @@ import {
   Link,
   Outlet,
   useLocation,
-  Navigate,
+  useNavigate,
 } from "react-router-dom";
 import { ComponentPage } from "./pages/ComponentPage";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
@@ -58,9 +58,12 @@ const App = () => {
   const location = useLocation();
   const currentName = (location.state as { name: string } | undefined)?.name;
 
-  if (typeof window !== "undefined" && location.pathname === "/") {
-    return <Navigate to="/welcome" />;
-  }
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (location.pathname === "/") {
+      navigate("/welcome");
+    }
+  }, [location.pathname, navigate]);
 
   return (
     <Providers>

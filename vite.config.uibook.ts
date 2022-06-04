@@ -63,10 +63,5 @@ export default defineConfig({
     }),
     uiBook(),
   ],
-  build: {
-    lib: {
-      entry: "./uibook/entry.server.tsx",
-    },
-  },
   esbuild: {},
 });

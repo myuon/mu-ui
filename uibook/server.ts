@@ -1,3 +1,4 @@
+import fs from "fs";
 import path from "path";
 import express from "express";
 import { ViteDevServer } from "vite";
@@ -51,19 +52,23 @@ export async function createServer(root = process.cwd(), hmrPort?: number) {
     try {
       const url = req.originalUrl;
 
-      let render: RenderFunction;
       if (!isProd) {
-        render = (await vite?.ssrLoadModule("/uibook/entry.server.tsx"))
+        const htmlFile = fs.readFileSync("./uibook/index.html", "utf-8");
+        const template = await vite.transformIndexHtml(url, htmlFile);
+        const render = (await vite?.ssrLoadModule("/uibook/entry.server.tsx"))
           ?.render;
+
+        const html = render(url);
+        res
+          .status(200)
+          .setHeader("Content-Type", "text/html")
+          .send(template.replace(`<!--app-html-->`, html));
       } else {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        render = (await import("./dist/server/entry.server.js")).render;
+        (await import("./dist/server/entry.server.js")).render;
+        throw new Error("not supported");
       }
-
-      res.status(200).setHeader("Content-Type", "text/html");
-      const htmlPipe = render(url, {});
-      htmlPipe.pipe(res);
     } catch (e) {
       if (e instanceof Error) {
         !isProd && vite?.ssrFixStacktrace(e);
