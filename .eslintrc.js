@@ -26,5 +26,5 @@ module.exports = {
     "react/display-name": "off",
     "react/prop-types": "off",
   },
-  ignorePatterns: [".eslintrc.js"],
+  ignorePatterns: [".eslintrc.js", "uibook/server.mjs"],
 };
