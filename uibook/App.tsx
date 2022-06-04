@@ -1,5 +1,5 @@
 import { css, Global } from "@emotion/react";
-import React, { useEffect, useMemo } from "react";
+import React, { useMemo } from "react";
 import { usePromise } from "../src/usePromise";
 import {
   Route,

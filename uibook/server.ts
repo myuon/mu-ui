@@ -1,26 +1,21 @@
-import fs from "fs";
 import path from "path";
 import express from "express";
 import { ViteDevServer } from "vite";
+import ReactDOMServer from "react-dom/server";
+
+export type RenderFunction = (
+  url: string,
+  options?: ReactDOMServer.RenderToPipeableStreamOptions
+) => ReactDOMServer.PipeableStream;
 
 const isTest = process.env.NODE_ENV === "test" || !!process.env.VITE_TEST_BUILD;
+const isProd = process.env.NODE_ENV === "production";
 
-process.env.MY_CUSTOM_SECRET = "API_KEY_qwertyuiop";
-
-export async function createServer(
-  root = process.cwd(),
-  isProd = process.env.NODE_ENV === "production",
-  hmrPort
-) {
-  const resolve = (p) => path.resolve(__dirname, p);
-
-  const indexProd = isProd
-    ? fs.readFileSync(resolve("dist/client/index.html"), "utf-8")
-    : "";
-
+export async function createServer(root = process.cwd(), hmrPort?: number) {
+  const resolve = (p: string) => path.resolve(__dirname, p);
   const app = express();
 
-  let vite: ViteDevServer;
+  let vite: ViteDevServer | undefined = undefined;
   if (!isProd) {
     vite = await (
       await import("vite")
@@ -39,6 +34,7 @@ export async function createServer(
           port: hmrPort,
         },
       },
+      configFile: "vite.config.uibook.ts",
     });
     // use vite's connect instance as middleware
     app.use(vite.middlewares);
@@ -55,41 +51,25 @@ export async function createServer(
     try {
       const url = req.originalUrl;
 
-      let template: string;
-      let render: (url: string) => ReactDOMServer.PipeableStream;
+      let render: RenderFunction;
       if (!isProd) {
-        // always read fresh template in dev
-        template = fs.readFileSync(resolve("index.html"), "utf-8");
-        template = await vite.transformIndexHtml(url, template);
-        render = (await vite.ssrLoadModule("/uibook/entry.server.tsx")).render;
+        render = (await vite?.ssrLoadModule("/uibook/entry.server.tsx"))
+          ?.render;
       } else {
-        template = indexProd;
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         render = (await import("./dist/server/entry.server.js")).render;
       }
 
-      const context = {};
-      const htmlPipe = render(url, context);
-
-      if (context.url) {
-        // Somewhere a `<Redirect>` was rendered
-        return res.redirect(301, context.url);
-      }
-
-      const [former, later] = template.split(`<!--app-html-->`);
-
-      res = res.status(200).set({ "Content-Type": "text/html" });
-      res.write(former);
-
+      res.status(200).setHeader("Content-Type", "text/html");
+      const htmlPipe = render(url, {});
       htmlPipe.pipe(res);
-      res.on("end", () => {
-        res.end(later);
-      });
     } catch (e) {
-      !isProd && vite.ssrFixStacktrace(e);
-      console.log(e.stack);
-      res.status(500).end(e.stack);
+      if (e instanceof Error) {
+        !isProd && vite?.ssrFixStacktrace(e);
+        console.log(e.stack);
+        res.status(500).end(e.stack);
+      }
     }
   });
 
@@ -97,7 +77,7 @@ export async function createServer(
 }
 
 if (!isTest) {
-  createServer().then(({ app }) =>
+  createServer(process.cwd()).then(({ app }) =>
     app.listen(3000, () => {
       console.log("http://localhost:3000");
     })
