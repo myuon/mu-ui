@@ -20,7 +20,7 @@
   },
   "types": "./dist/types/index.d.ts",
   "scripts": {
-    "dev": "vite --config vite.config.uibook.ts",
+    "dev": "node --require esbuild-register uibook/server",
     "dev:ssr": "node --require esbuild-register ./uibook/server.ts",
     "prebuild": "rm -rf ./dist",
     "build": "yarn typecheck && yarn build:vite && yarn build:tsc",
