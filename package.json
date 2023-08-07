@@ -14,11 +14,11 @@
   "module": "./dist/mu-ui.es.js",
   "exports": {
     ".": {
+      "types": "./dist/types/index.d.ts",
       "import": "./dist/mu-ui.es.js",
       "require": "./dist/mu-ui.umd.js"
     }
   },
-  "types": "./dist/types/index.d.ts",
   "scripts": {
     "dev": "vite --config vite.config.uibook.ts",
     "prebuild": "rm -rf ./dist",
