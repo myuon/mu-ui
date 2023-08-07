@@ -10,13 +10,14 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/mu-ui.umd.js",
-  "module": "./dist/mu-ui.es.js",
+  "type": "module",
+  "main": "./dist/mu-ui.umd.cjs",
+  "module": "./dist/mu-ui.js",
   "exports": {
     ".": {
       "types": "./dist/types/index.d.ts",
-      "import": "./dist/mu-ui.es.js",
-      "require": "./dist/mu-ui.umd.js"
+      "import": "./dist/mu-ui.js",
+      "require": "./dist/mu-ui.umd.cjs"
     }
   },
   "scripts": {
